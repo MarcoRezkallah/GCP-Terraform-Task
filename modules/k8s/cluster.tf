@@ -17,6 +17,7 @@ resource "google_container_cluster" "cluster" {
     disk_size_gb = 100
     disk_type    = "pd-standard"
     machine_type = var.machine_type
+    image_type   = var.machine_os_image
   }
 
   private_cluster_config {
@@ -31,7 +32,5 @@ resource "google_container_cluster" "cluster" {
     }
   }
 
-  ip_allocation_policy {
-
-  }
+  ip_allocation_policy {}
 }
