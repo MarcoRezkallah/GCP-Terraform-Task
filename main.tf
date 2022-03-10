@@ -20,3 +20,41 @@ module "k8s" {
   subnet_link        = module.network.subnet_link
   subnet_cidr        = module.network.subnet_cidr
 }
+
+module "compute" {
+  source = "./modules/compute"
+
+  machine_name = "test-vm"
+  machine_type = "e2-medium"
+  os_image     = "debian-cloud/debian-10"
+  region       = "us-central1"
+  zone         = "us-central1-a"
+  vpc_link     = module.network.vpc_link
+  subnet_link  = module.network.subnet_link
+}
+
+module "bucket_1" {
+  source      = "./modules/storage"
+  bucket_name = "bucket_1"
+}
+module "bucket_2" {
+  source      = "./modules/storage"
+  bucket_name = "bucket_2"
+}
+module "bucket_3" {
+  source      = "./modules/storage"
+  bucket_name = "bucket_3"
+}
+
+module "dataset_1" {
+  source       = "./modules/dataset"
+  dataset_name = "dataset_1"
+}
+module "dataset_2" {
+  source       = "./modules/dataset"
+  dataset_name = "dataset_2"
+}
+module "dataset_3" {
+  source       = "./modules/dataset"
+  dataset_name = "dataset_3"
+}

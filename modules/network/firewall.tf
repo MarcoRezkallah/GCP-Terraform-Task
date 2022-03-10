@@ -1,4 +1,4 @@
-resource "google_compute_firewall" "default_firewall" {
+resource "google_compute_firewall" "firewall" {
   name    = "vpc-allow-ssh-firewall"
   network = google_compute_network.vpc_network.id
 

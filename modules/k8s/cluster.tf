@@ -1,6 +1,6 @@
 # K8s cluster: ▪Cluster specs:•Cluster is private[all networking configs are default].•
 
-resource "google_container_cluster" "main_cluster" {
+resource "google_container_cluster" "cluster" {
   name               = var.cluster_name
   location           = var.cluster_region
   node_locations     = var.cluster_zones_list
