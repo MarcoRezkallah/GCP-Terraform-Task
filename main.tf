@@ -3,15 +3,15 @@ module "service_accounts" {
 
   for_each = tomap(
     {
-      "gcr" = {
+      gcr = {
         account_id   = "gcr-service-account"
         account_name = "gcr Service Acoount"
       }
-      "gs" = {
+      gs = {
         account_id   = "gs-service-account"
         account_name = "gs Service Acoount"
       }
-      "bq" = {
+      bq = {
         account_id   = "bq-service-account"
         account_name = "bq Service Acoount"
       }
@@ -71,3 +71,13 @@ module "datasets" {
   dataset_name = "dataset_${count.index + 1}"
 }
 
+module "container_registery" {
+  source = "./modules/container-registery"
+
+  iam = {
+    gcr = {
+      member = "serviceAccount:${module.service_accounts["gcr"].email}"
+      role   = "roles/storage.objectViewer"
+    }
+  }
+}
