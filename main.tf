@@ -1,3 +1,27 @@
+module "service_accounts" {
+  source = "./modules/service-account"
+
+  for_each = tomap(
+    {
+      "gcr" = {
+        account_id   = "gcr-service-account"
+        account_name = "gcr Service Acoount"
+      }
+      "gs" = {
+        account_id   = "gs-service-account"
+        account_name = "gs Service Acoount"
+      }
+      "bq" = {
+        account_id   = "bq-service-account"
+        account_name = "bq Service Acoount"
+      }
+    }
+  )
+
+  account_id   = each.value.account_id
+  account_name = each.value.account_name
+}
+
 module "network" {
   source = "./modules/network"
 
@@ -33,28 +57,17 @@ module "compute" {
   subnet_link  = module.network.subnet_link
 }
 
-module "bucket_1" {
-  source      = "./modules/storage"
-  bucket_name = "bucket_1"
-}
-module "bucket_2" {
-  source      = "./modules/storage"
-  bucket_name = "bucket_2"
-}
-module "bucket_3" {
-  source      = "./modules/storage"
-  bucket_name = "bucket_3"
+module "buckets" {
+  source = "./modules/storage"
+
+  count       = 3
+  bucket_name = "bucket_${count.index + 1}"
 }
 
-module "dataset_1" {
-  source       = "./modules/dataset"
-  dataset_name = "dataset_1"
+module "datasets" {
+  source = "./modules/dataset"
+
+  count        = 3
+  dataset_name = "dataset_${count.index + 1}"
 }
-module "dataset_2" {
-  source       = "./modules/dataset"
-  dataset_name = "dataset_2"
-}
-module "dataset_3" {
-  source       = "./modules/dataset"
-  dataset_name = "dataset_3"
-}
+
