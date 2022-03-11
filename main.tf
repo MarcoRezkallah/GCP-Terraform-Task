@@ -62,6 +62,13 @@ module "buckets" {
 
   count       = 3
   bucket_name = "bucket_${count.index + 1}"
+
+  iam = {
+    gs = {
+      member = "serviceAccount:${module.service_accounts["gs"].email}"
+      role   = "roles/storage.objectViewer"
+    }
+  }
 }
 
 module "datasets" {
