@@ -1,11 +1,13 @@
 resource "google_compute_instance" "instance" {
-  name         = var.machine_name # "test-vm"
-  machine_type = var.machine_type # "e2-medium"
-  zone         = var.zone         # "us-central1-a"
+  name         = var.machine_name
+  machine_type = var.machine_type
+  zone         = var.zone
+
+  allow_stopping_for_update = true
 
   boot_disk {
     initialize_params {
-      image = var.os_image # "debian-cloud/debian-9"
+      image = var.os_image
     }
   }
 
@@ -16,5 +18,9 @@ resource "google_compute_instance" "instance" {
 
     access_config {
     }
+  }
+  service_account {
+    email  = google_service_account.account.email
+    scopes = ["cloud-platform"]
   }
 }

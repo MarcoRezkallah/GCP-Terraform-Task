@@ -1,7 +1,9 @@
 variable "machine_name" {}
 variable "machine_type" {}
+variable "machine_account_id" {}
 variable "os_image" {}
 variable "region" {}
 variable "zone" {}
 variable "vpc_link" {}
 variable "subnet_link" {}
+variable "service_accounts" {}

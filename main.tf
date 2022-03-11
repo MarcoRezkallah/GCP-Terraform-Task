@@ -48,13 +48,19 @@ module "k8s" {
 module "compute" {
   source = "./modules/compute"
 
-  machine_name = "test-vm"
-  machine_type = "e2-medium"
-  os_image     = "debian-cloud/debian-10"
-  region       = "us-central1"
-  zone         = "us-central1-a"
-  vpc_link     = module.network.vpc_link
-  subnet_link  = module.network.subnet_link
+  machine_name       = "test-vm"
+  machine_account_id = "test-vm"
+  machine_type       = "e2-medium"
+  os_image           = "debian-cloud/debian-10"
+  region             = "us-central1"
+  zone               = "us-central1-a"
+  vpc_link           = module.network.vpc_link
+  subnet_link        = module.network.subnet_link
+
+  service_accounts = toset([
+    module.service_accounts["gs"].name,
+    module.service_accounts["bq"].name
+  ])
 }
 
 module "buckets" {
