@@ -76,6 +76,13 @@ module "datasets" {
 
   count        = 3
   dataset_name = "dataset_${count.index + 1}"
+
+  iam = {
+    bq = {
+      member = "serviceAccount:${module.service_accounts["bq"].email}"
+      role   = "roles/bigquery.dataEditor"
+    }
+  }
 }
 
 module "container_registery" {
